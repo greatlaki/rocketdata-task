@@ -28,4 +28,7 @@ class GitSpider(scrapy.Spider):
             'commit-author': response.css("div.css-truncate a.commit-author::text").get(),
             'commit-name': response.css('span.d-none a::text').get(),
             'commit-datetime': response.css('a.Link--secondary relative-time::attr(datetime)').get(),
+            'releases': response.css("h2.h4 span::text").get(default='0'),
+            'release-version': response.css('div.d-flex span.mr-2::text').get(),
+            'release-datetime': response.css('div.color-fg-muted relative-time::attr(datetime)').get(),
         }
