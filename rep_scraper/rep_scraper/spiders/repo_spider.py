@@ -5,12 +5,24 @@ class GitSpider(scrapy.Spider):
     name = "github"
     allowed_domains = ["github.com"]
     start_urls = [
-        "https://github.com/scrapy",
+        "https://github.com/",
     ]
+    some_link = input('Greet:')
+    status_http = [404, 500]
 
     def parse(self, response, **kwargs):
-        yield response.follow(url=f'https://github.com/orgs/scrapy/repositories',
-                              callback=self.parse_repo)
+        yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories?page=1',
+                              callback=self.page_validation)
+
+    def page_validation(self, response):
+        if response.status in self.status_http:
+            yield response.follow(url=f'https://github.com/{GitSpider.some_link}?tab=repositories',
+                                  callback=self.parse_user)
+        else:
+            page_count = response.css("em.current::attr(data-total-pages)").get(default="1")
+            for count in range(1, int(page_count) + 1):
+                yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories?page={count}',
+                                      callback=self.parse_project)
 
     def parse_repo(self, response):
         for name in response.css("div.Box ul a.d-inline-block::attr(href)").getall():
