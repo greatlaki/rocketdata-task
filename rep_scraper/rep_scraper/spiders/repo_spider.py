@@ -8,6 +8,7 @@ class GitSpider(scrapy.Spider):
         "https://github.com/",
     ]
     some_link = input('Greet:')
+    some_list = []
     status_http = [404, 500]
 
     def parse(self, response, **kwargs):
@@ -23,6 +24,22 @@ class GitSpider(scrapy.Spider):
             for count in range(1, int(page_count) + 1):
                 yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories?page={count}',
                                       callback=self.parse_project)
+
+    def parse_user(self, response):
+
+        if "Next" not in response.css("div.BtnGroup a::text").getall() and len(
+                response.css("div.BtnGroup a::text").getall()) < 2:
+            GitSpider.some_list.extend(response.css("h3.wb-break-all a::attr(href)").getall())
+            for get_repository in GitSpider.some_list:
+                yield response.follow(url=f'https://github.com{get_repository}', callback=self.parse_repo_content)
+        else:
+            GitSpider.some_list.extend(response.css("h3.wb-break-all a::attr(href)").getall())
+            if len(response.css("div.BtnGroup a::attr(href)").getall()) > 1:
+                yield response.follow(url=response.css("div.BtnGroup a::attr(href)")[1].get(),
+                                      callback=self.parse_user)
+            else:
+                yield response.follow(url=response.css("div.BtnGroup a::attr(href)").get(),
+                                      callback=self.parse_user)
 
     def parse_repo(self, response):
         for name in response.css("div.Box ul a.d-inline-block::attr(href)").getall():
