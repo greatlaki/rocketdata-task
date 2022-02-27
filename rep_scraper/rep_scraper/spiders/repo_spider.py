@@ -41,9 +41,9 @@ class GitSpider(scrapy.Spider):
                 yield response.follow(url=response.css("div.BtnGroup a::attr(href)").get(),
                                       callback=self.parse_user)
 
-    def parse_repo(self, response):
-        for name in response.css("div.Box ul a.d-inline-block::attr(href)").getall():
-            yield response.follow(url=f'https://github.com{name}', callback=self.parse_repo_content)
+    def parse_project(self, response):
+        for get in response.css("div.Box ul a.d-inline-block::attr(href)").getall():
+            yield response.follow(url=f'https://github.com{get}', callback=self.parse_repo_content)
 
     def parse_repo_content(self, response):
         yield {
