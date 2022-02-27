@@ -7,6 +7,16 @@ import scrapy
 
 
 class RepScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    name_rep = scrapy.Field()
+    about = scrapy.Field()
+    link_site = scrapy.Field()
+    stars = scrapy.Field()
+    forks = scrapy.Field()
+    watching = scrapy.Field()
+    commits = scrapy.Field()
+    commit_author = scrapy.Field()
+    commit_name = scrapy.Field()
+    commit_datetime = scrapy.Field()
+    releases = scrapy.Field()
+    release_version = scrapy.Field()
+    release_datetime = scrapy.Field()
