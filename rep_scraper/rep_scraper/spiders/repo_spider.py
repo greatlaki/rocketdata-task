@@ -19,4 +19,5 @@ class GitSpider(scrapy.Spider):
     def parse_repo_content(self, response):
         yield {
             'name-rep': response.css("strong.mr-2 a::text").get(),
+            'about': response.css("p.my-3::text").get(default='None').strip(),
         }
