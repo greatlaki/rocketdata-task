@@ -7,7 +7,7 @@ class GitSpider(scrapy.Spider):
     start_urls = [
         "https://github.com/",
     ]
-    some_link = input('Greet:')
+    some_link = input('Greet: ')
     some_list = []
     status_http = [404, 500]
 
