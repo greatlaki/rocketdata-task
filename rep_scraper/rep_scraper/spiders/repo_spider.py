@@ -22,4 +22,5 @@ class GitSpider(scrapy.Spider):
             'about': response.css("p.my-3::text").get(default='None').strip(),
             'link-site': response.css('span.flex-auto a.text-bold::text').get('None'),
             'stars': response.css("a.Link--muted strong::text").getall()[0],
+            'forks': response.css("a.Link--muted strong::text").getall()[2],
         }
