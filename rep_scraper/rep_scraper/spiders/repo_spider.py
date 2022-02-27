@@ -25,4 +25,7 @@ class GitSpider(scrapy.Spider):
             'forks': response.css("a.Link--muted strong::text").getall()[2],
             'watching': response.css("a.Link--muted strong::text").getall()[1],
             'commits': response.css("span.d-none strong::text").get(),
+            'commit-author': response.css("div.css-truncate a.commit-author::text").get(),
+            'commit-name': response.css('span.d-none a::text').get(),
+            'commit-datetime': response.css('a.Link--secondary relative-time::attr(datetime)').get(),
         }
