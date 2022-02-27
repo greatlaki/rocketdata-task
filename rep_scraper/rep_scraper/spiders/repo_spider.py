@@ -24,4 +24,5 @@ class GitSpider(scrapy.Spider):
             'stars': response.css("a.Link--muted strong::text").getall()[0],
             'forks': response.css("a.Link--muted strong::text").getall()[2],
             'watching': response.css("a.Link--muted strong::text").getall()[1],
+            'commits': response.css("span.d-none strong::text").get(),
         }
