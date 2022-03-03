@@ -12,7 +12,7 @@ class GitSpider(scrapy.Spider):
     status_http = [404, 500]
 
     def parse(self, response, **kwargs):
-        yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories?page=1',
+        yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories',
                               callback=self.page_validation)
 
     def page_validation(self, response):
@@ -20,9 +20,7 @@ class GitSpider(scrapy.Spider):
             yield response.follow(url=f'https://github.com/{GitSpider.some_link}?tab=repositories',
                                   callback=self.parse_user)
         else:
-            page_count = response.css("em.current::attr(data-total-pages)").get(default="1")
-            for count in range(1, int(page_count) + 1):
-                yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories?page={count}',
+            yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories?page=1',
                                       callback=self.parse_project)
 
     def parse_user(self, response):
