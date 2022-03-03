@@ -20,3 +20,4 @@ class RepScraperItem(scrapy.Item):
     releases = scrapy.Field()
     release_version = scrapy.Field()
     release_datetime = scrapy.Field()
+
