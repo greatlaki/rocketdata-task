@@ -15,4 +15,3 @@ Activate the virtual environment <strong>source .venv/bin/activate</strong></p>
    <strong> scrapy crawl github  </strong> 
   </p>
   
-
