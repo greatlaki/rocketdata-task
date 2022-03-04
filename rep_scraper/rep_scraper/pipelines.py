@@ -16,12 +16,12 @@ class ScrapygithubPipeline:
         self.create_table()
 
     def create_connection(self):
-        self.conn = sqlite3.connect("github.db")
-        self.curr = self.conn.cursor()
+        self.con = sqlite3.connect("github.db")
+        self.cur = self.con.cursor()
 
     def create_table(self):
-        self.curr.execute("""DROP TABLE IF EXISTS content""")
-        self.curr.execute("""CREATE TABLE content 
+        self.cur.execute("""DROP TABLE IF EXISTS content""")
+        self.cur.execute("""CREATE TABLE content 
                            (name_rep TEXT, about TEXT, link_site TEXT,
                             stars TEXT, forks TEXT, watching TEXT,
                             commits TEXT, commit_author TEXT, commit_name TEXT,
@@ -33,7 +33,7 @@ class ScrapygithubPipeline:
         return item
 
     def store_in_db(self, item):
-        self.curr.execute("""INSERT OR IGNORE INTO content VALUES (?,?,?,
+        self.cur.execute("""INSERT OR IGNORE INTO content VALUES (?,?,?,
                                                                   ?,?,?,
                                                                   ?,?,?,
                                                                   ?,?,?,
@@ -43,4 +43,4 @@ class ScrapygithubPipeline:
                           item["commits"], item["commit_author"], item["commit_name"],
                           item["commit_datetime"], item["releases"], item["release_version"],
                           item["release_datetime"]))
-        self.conn.commit()
+        self.con.commit()
