@@ -2,21 +2,21 @@ import scrapy
 
 
 class GitSpider(scrapy.Spider):
+    handle_httpstatus_list = [404, 500]
+
     name = "github"
     allowed_domains = ["github.com"]
-    start_urls = [
-        "https://github.com/",
-    ]
-    some_link = input('Greet: ')
+    start_urls = [f'https://github.com']
+
+    some_link = input("Greet! Enter your link(user or project)- ")
     some_list = []
-    status_http = [404, 500]
 
     def parse(self, response, **kwargs):
         yield response.follow(url=f'https://github.com/orgs/{GitSpider.some_link}/repositories',
                               callback=self.page_validation)
 
     def page_validation(self, response):
-        if response.status in self.status_http:
+        if response.status in self.handle_httpstatus_list:
             yield response.follow(url=f'https://github.com/{GitSpider.some_link}?tab=repositories',
                                   callback=self.parse_user)
         else:
