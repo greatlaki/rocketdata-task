@@ -14,8 +14,7 @@ NEWSPIDER_MODULE = 'rep_scraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'rep_scraper (+http://www.yourdomain.com)'
-
+USER_AGENT = 'rep_scraper (https://github.com/)'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
