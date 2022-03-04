@@ -15,3 +15,10 @@ Activate the virtual environment <strong>source .venv/bin/activate</strong></p>
    <strong> scrapy crawl github  </strong> 
   </p>
   
+### Data base is SQLite
+<p> The data is saved in a file - github.db</p>
+<p>If you don't need to program anything, you can use a GUI like sqlitebrowser or anything like that to view the database contents.</p>
+<ol>
+  <li>Website: http://sqlitebrowser.org/</li>
+  <li>Project: https://github.com/sqlitebrowser/sqlitebrowser</li>
+</ol> 
